@@ -2,14 +2,14 @@ console.log('lets write Javascript')
 
 function removeSpecialCharacters(inputString) {
     var specialCharacterPattern = /[!@#$%^&*()_+{}\[\]:;<>,?~\\\/\=]/;
-  
+
     for (var i = 0; i < inputString.length; i++) {
         if (specialCharacterPattern.test(inputString[i])) {
             // Return the substring up to the special character
             return inputString.substring(0, i);
         }
     }
-  
+
     // If no special characters are found, return the entire string
     return inputString;
 }
@@ -19,29 +19,29 @@ function formatSeconds(seconds) {
     if (isNaN(seconds) || seconds < 0) {
         return "Invalid input";
     }
-  
+
     // Round or truncate the decimal part
     var roundedSeconds = Math.floor(seconds);
-  
+
     // Calculate minutes and remaining seconds
     var minutes = Math.floor(roundedSeconds / 60);
     var remainingSeconds = roundedSeconds % 60;
-  
+
     // Add leading zero if remainingSeconds is less than 10
     if (remainingSeconds < 10) {
         remainingSeconds = "0" + remainingSeconds;
     }
-  
+
     // Construct the formatted string
     var formattedTime = minutes + ":" + remainingSeconds;
-  
+
     return formattedTime;
 }
 
 let currentsong = new Audio();
 
 async function getsongs() {
-    let response = await fetch("https://vagarth2001.github.io/your-repo/songs/");
+    let response = await fetch("https://vagarth2001.github.io/your-repo/Songs/");
     let text = await response.text();
     let div = document.createElement('div');
     div.innerHTML = text;
@@ -50,14 +50,14 @@ async function getsongs() {
     for (let index = 0; index < anchor.length; index++) {
         const element = anchor[index];
         if (element.href.endsWith('.mp3')) {
-            songs.push(element.href.split('/songs/')[1]);
+            songs.push(element.href.split('/Songs/')[1]);
         }
     }
     return songs;
 }
 
 function PlaySong(track, pause = false) {
-    currentsong.src = "https://vagarth2001.github.io/Music_Player/Songs/" + track.replaceAll(" ", '%20');
+    currentsong.src = "https://vagarth2001.github.io/your-repo/Songs/" + track.replaceAll(" ", '%20');
     if (!pause) {
         currentsong.play();
         play.src = "pause.svg";
@@ -70,6 +70,7 @@ async function main() {
     PlaySong(songs[0], true);
 
     let SongUl = document.querySelector(".songslist").getElementsByTagName("ul")[0];
+    SongUl.innerHTML = ''; // Clear the list before adding new items
     for (const song of songs) {
         SongUl.innerHTML = SongUl.innerHTML + `<li>
             <div class="info flex">
